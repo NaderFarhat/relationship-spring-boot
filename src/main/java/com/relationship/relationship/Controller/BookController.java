@@ -34,9 +34,15 @@ public class BookController {
 
     @PostMapping("/book/addtobook")
     public ResponseEntity<?> addPhotoToBook(@RequestBody PhotoToBookForm form ) {
-//        log.info("Saving photo {} to book {}", photo_id, book_id);
         log.info("Saving photo {} to book {}", form.getBook_id(), form.getPhoto_id());
         bookService.addPhotoToBook(form.getPhoto_id(),  form.getBook_id());
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/book/addcategoriestobook")
+    public ResponseEntity<?> addCategoryToBook(@RequestBody CategoryToBookForm form ) {
+        log.info("Saving category {} to book {}", form.getCategory_id(), form.getBook_id());
+        bookService.addCategoryToBook(form.getCategory_id(), form.getBook_id());
         return ResponseEntity.ok().build();
     }
 
@@ -47,3 +53,11 @@ class PhotoToBookForm {
     private Long photo_id;
     private Long book_id;
 }
+
+
+@Data
+class CategoryToBookForm {
+    private Long book_id;
+    private Long category_id;
+}
+

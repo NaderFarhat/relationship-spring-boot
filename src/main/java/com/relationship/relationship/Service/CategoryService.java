@@ -10,13 +10,16 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class CategoryService {
+public class CategoryService implements Serializable {
 
     private final CategoryRepo categoryRepo;
 
@@ -39,11 +42,14 @@ public class CategoryService {
             throw new EntityNotFoundException("Book with this id was not in the db");
         });
 
-        parent.getChildren().add(children);
-        children.setParent(parent);
+        Collection<Category> childrenAdd = new ArrayList<>();
+        childrenAdd.add(children);
+
+        parent.setChildren(childrenAdd);
+//        children.setParent(parent);
 
         categoryRepo.save(parent);
-        categoryRepo.save(children);
+//        categoryRepo.save(children);
 
 //        book.setPhoto(photo);
 //        bookRepo.save(book);

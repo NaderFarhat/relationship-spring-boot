@@ -33,10 +33,9 @@ public class CategoryController {
         return ResponseEntity.created(uri).body(categoryService.saveCategory(category));
     }
 
-    @PutMapping(value = "/category/enroll", consumes={"application/json"})
-    public ResponseEntity<?> CategoryEnrollCategory(@RequestBody CategoryToCategory form) {
+    @PostMapping(value = "/category/enroll", consumes={"application/json"})
+    public void CategoryEnrollCategory(@RequestBody CategoryToCategory form) {
         categoryService.CategoryEnrollCategory(form.getCategory_parent_id(),form.getCategory_parent_id());
-        return null;
     }
 }
 

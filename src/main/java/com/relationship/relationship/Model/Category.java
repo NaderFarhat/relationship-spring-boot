@@ -1,7 +1,5 @@
 package com.relationship.relationship.Model;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -21,7 +19,7 @@ public class Category {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parent_id")
-    @JsonIgnore
+    @JsonBackReference
     private Category parent;
 
     @OneToMany(mappedBy = "parent")
@@ -29,6 +27,7 @@ public class Category {
     private Collection<Category> children;
 
     @ManyToMany(mappedBy = "categories")
+    @JsonIgnore
     private Collection<Book> books;
 
     public Long getId() {
