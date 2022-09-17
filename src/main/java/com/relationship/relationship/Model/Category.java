@@ -1,4 +1,7 @@
 package com.relationship.relationship.Model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,9 +21,11 @@ public class Category {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parent_id")
+    @JsonIgnore
     private Category parent;
 
     @OneToMany(mappedBy = "parent")
+    @JsonIgnore
     private Collection<Category> children;
 
     @ManyToMany(mappedBy = "categories")

@@ -1,13 +1,14 @@
 package com.relationship.relationship.Controller;
 
 import com.relationship.relationship.Model.Author;
+import com.relationship.relationship.Model.Photo;
 import com.relationship.relationship.Service.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -20,5 +21,11 @@ public class AuthorController {
     @GetMapping("/authors")
     public ResponseEntity<List<Author>> getAuthors() {
         return ResponseEntity.ok().body(authorService.getAuthors());
+    }
+
+    @PostMapping("/author/save")
+    public ResponseEntity<Author> saveAuthor(@RequestBody Author author) {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/author/save").toUriString());
+        return ResponseEntity.created(uri).body(authorService.saveAuthor(author));
     }
 }

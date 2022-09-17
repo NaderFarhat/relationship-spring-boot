@@ -22,4 +22,9 @@ public class AuthorService {
         log.info("Fetching all authors");
         return authorRepo.findAll();
     }
+
+    public Author saveAuthor(Author author){
+        authorRepo.save(author);
+        return author;
+    }
 }
