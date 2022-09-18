@@ -1,5 +1,8 @@
 package com.relationship.relationship.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -27,6 +30,7 @@ public class Author {
     private Date birthDate;
 
     @ManyToMany(mappedBy = "authors")
+    @JsonIgnore
     private Collection<Book> books;
 
     public Long getId() {

@@ -63,9 +63,7 @@ public class BookService {
         Category cat = categoryRepo.findById(category_id).orElseThrow(() -> {
             throw new EntityNotFoundException("Book with this id was not in the db");
         });;
-        Collection<Category> catArray = new ArrayList<>();
-        catArray.add(cat);
-        book.setCategories(catArray);
+        book.getCategories().add(cat);
         bookRepo.save(book);
 //        book.setPhoto(photo);
 //        bookRepo.save(book);
