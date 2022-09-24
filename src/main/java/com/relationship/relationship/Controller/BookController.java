@@ -1,12 +1,15 @@
 package com.relationship.relationship.Controller;
 
 import com.relationship.relationship.Model.Book;
-import com.relationship.relationship.Model.Photo;
+import com.relationship.relationship.Repository.BookRepo;
 import com.relationship.relationship.Service.BookService;
-import com.relationship.relationship.Service.PhotoService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -21,7 +24,21 @@ import java.util.List;
 public class BookController {
     private final BookService bookService;
 
+    private final BookRepo bookRepository;
+
+
+    @GetMapping("/books3")
+    public Page<Book> getAll() {
+        return bookService.findAll();
+    }
+
     @GetMapping("/books")
+    public Page<Book> findAll(@RequestParam int page, @RequestParam int size) {
+        PageRequest pr = PageRequest.of(page,size);
+        return bookRepository.findAll(pr);
+    }
+
+    @GetMapping("/books2")
     public ResponseEntity<List<Book>> getBooks() {
         return ResponseEntity.ok().body(bookService.getBooks());
     }

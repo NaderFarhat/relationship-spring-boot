@@ -8,7 +8,12 @@ import com.relationship.relationship.Repository.CategoryRepo;
 import com.relationship.relationship.Repository.PhotoRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.PageImpl;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
@@ -27,14 +32,26 @@ public class BookService {
 
     private final CategoryRepo categoryRepo;
 
-    public Book getBook(Long book_id) {
-        log.info("Fetching book {}", book_id);
-        return bookRepo.getById(book_id);
+    public Page<Book> findAll() {
+        int page = 0;
+        int size = 10;
+        PageRequest pageRequest = PageRequest.of(
+                page,
+                size,
+                Sort.Direction.ASC,
+                "name");
+        return new PageImpl<>(
+                bookRepo.findAll(),
+                pageRequest, size);
     }
+//    public Book getBook(Long book_id) {
+//        log.info("Fetching book {}", book_id);
+//        return bookRepo.getById(book_id);
+//    }
 
     public List<Book> getBooks() {
         log.info("Fetching all books");
-        return bookRepo.findAll();
+        return (List<Book>) bookRepo.findAll();
     }
 
     public Book saveBook(Book book) {
